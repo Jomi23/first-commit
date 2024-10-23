@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My To-Do List</h1>
+    <input type="text" id="todo-input" placeholder="Add a new task...">
+    <button id="add-button">Add</button>
+    <ul id="todo-list"></ul>
+
+    <script>
+        const addButton = document.getElementById('add-button');
+        const todoInput = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+
+        addButton.addEventListener('click', function() {
+            const todoText = todoInput.value.trim();
+            if (todoText) {
+                const todoItem = document.createElement('li');
+                todoItem.className = 'todo-item';
+                todoItem.innerHTML = `
+                    <span>${todoText}</span>
+                    <button class="delete-button">Delete</button>
+                `;
+                todoList.appendChild(todoItem);
+                todoInput.value = '';
+
+                const deleteButton = todoItem.querySelector('.delete-button');
+                deleteButton.addEventListener('click', function() {
+                    todoList.removeChild(todoItem);
+                });
+
+                todoItem.querySelector('span').addEventListener('click', function() {
+                    todoItem.classList.toggle('completed');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
